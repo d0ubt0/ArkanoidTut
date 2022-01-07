@@ -15,7 +15,6 @@ public class ArkanoidController : MonoBehaviour
     private List<LevelData> _levels = new List<LevelData>();
     
     private int _currentLevel = 0;
-
     private Ball _ballPrefab = null;
     private List<Ball> _balls = new List<Ball>();
     
