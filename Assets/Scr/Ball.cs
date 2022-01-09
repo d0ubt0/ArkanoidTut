@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
-    private float BALL_VELOCITY_MIN_AXIS_VALUE = 0.5f;
+    public static float BALL_VELOCITY_MIN_AXIS_VALUE = 0.7f;
     [SerializeField]
-    private float _initSpeed = 5;
+    private float _initSpeed = 9;
     [SerializeField]
-    private float _minSpeed= 4;
-    [SerializeField]
-    private float _maxSpeed= 7;
+    private float _minSpeed= 7;
+    private float _maxSpeed= 11;
+    public static float currentMultiplier = 1;
 
     private Rigidbody2D _rb;
     private Collider2D _collider;
@@ -36,15 +36,15 @@ public class Ball : MonoBehaviour
     private void CheckVelocity()
     {
         Vector2 velocity =_rb.velocity;
-        float currentSpeed = velocity.magnitude;
+        float  currentSpeed = velocity.magnitude;
 
-        if(currentSpeed<_minSpeed)
+        if(currentSpeed<_minSpeed*currentMultiplier)
         {
-            velocity = velocity.normalized* _minSpeed;
+            velocity = velocity.normalized* _minSpeed*currentMultiplier;
         }
-        else if (currentSpeed>_maxSpeed)
+        else if (currentSpeed>_maxSpeed*currentMultiplier)
         {
-            velocity = velocity.normalized* _maxSpeed;
+            velocity = velocity.normalized* _maxSpeed*currentMultiplier;
         }
 
         if(Mathf.Abs(_rb.velocity.x) < BALL_VELOCITY_MIN_AXIS_VALUE) 
@@ -76,4 +76,5 @@ public class Ball : MonoBehaviour
         _collider.enabled = false;
         gameObject.SetActive(false);
     }
+    
 }

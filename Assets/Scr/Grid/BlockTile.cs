@@ -30,6 +30,11 @@ public class BlockTile : MonoBehaviour
     private int _totalHits = 1;
     private int _currentHits = 0;
 
+    [SerializeField]
+    private int _score = 10;
+    
+    public int Score => _score;
+
     public void SetData(int id, BlockColor color)
     {
         _id = id;
@@ -57,6 +62,8 @@ public class BlockTile : MonoBehaviour
             _collider.enabled = false;
             gameObject.SetActive(false);
             ArkanoidEvent.OnBlockDestroyedEvent?.Invoke(_id);
+            SpawnPowerUps(contactPoint);
+            
         }
         else
         {
@@ -78,5 +85,47 @@ public class BlockTile : MonoBehaviour
         }
 
         return Resources.Load<Sprite>(path);
+    }
+    
+    private void  SpawnPowerUps(ContactPoint2D contactPoint)
+    {
+        if(Random.value<0.5f)
+        {
+            float randomPUp;
+            randomPUp = Random.value;
+            if(randomPUp<0.15f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/SlowPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.3f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/FastPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.45f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/ReducePowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.6f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/IncreasePowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.7f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/50PointsPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.8f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/100PointsPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<0.9f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/250PointsPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+            else if(randomPUp<=1f)
+            {
+                Instantiate(Resources.Load<GameObject>("Prefabs/500PointsPowerUp"),contactPoint.point,Quaternion.identity);
+            }
+                
+            }
     }
 }

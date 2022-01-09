@@ -6,6 +6,8 @@ public class ArkanoidController : MonoBehaviour
 {
     private const string BALL_PREFAB_PATH = "Prefabs/Ball";
     private readonly Vector2 BALL_INIT_POSITION = new Vector2(0, -0.86f);
+
+    public int _totalScore = 0;
     
     [SerializeField]
     private GridController _gridController;
@@ -42,9 +44,11 @@ public class ArkanoidController : MonoBehaviour
     private void InitGame()
     {
         _currentLevel = 0;
+        _totalScore = 0;
         
         _gridController.BuildGrid(_levels[0]);
         SetInitialBall();
+        
     }
     
     private void SetInitialBall()
@@ -54,6 +58,9 @@ public class ArkanoidController : MonoBehaviour
         Ball ball = CreateBallAt(BALL_INIT_POSITION);
         ball.Init();
         _balls.Add(ball);
+        Ball.currentMultiplier =1;
+
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(0,0);
     }
     
     private Ball CreateBallAt(Vector2 position)
@@ -99,6 +106,13 @@ public class ArkanoidController : MonoBehaviour
     
     private void OnBlockDestroyed(int blockId)
     {
+        BlockTile blockDestroyed = _gridController.GetBlockBy(blockId);
+        if (blockDestroyed != null)
+        {
+            _totalScore += blockDestroyed.Score;
+            ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(blockDestroyed.Score, _totalScore);
+        }
+       
         if (_gridController.GetBlocksActive() == 0)
         {
             _currentLevel++;
@@ -114,5 +128,29 @@ public class ArkanoidController : MonoBehaviour
             }
 
         }
+    }
+
+    public  void Points50PowerUp()
+    {
+        _totalScore += 50;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(50, _totalScore);
+    }
+
+    public  void Points100PowerUp()
+    {
+        _totalScore += 100;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(100, _totalScore);
+    }
+
+    public  void Points250PowerUp()
+    {
+        _totalScore += 250;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(250, _totalScore);
+    }
+
+    public  void Points500PowerUp()
+    {
+        _totalScore += 500;
+        ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(500, _totalScore);
     }
 }

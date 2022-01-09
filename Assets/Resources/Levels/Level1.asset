@@ -15,7 +15,31 @@ MonoBehaviour:
   RowCount: 7
   rowSpacing: 0.1
   Rows:
-  - BlockAmount: 0
-    blockSpacing: 0
+  - BlockAmount: 7
+    blockSpacing: 0.1
+    BlockType: 1
+    BlockColor: 3
+  - BlockAmount: 2
+    blockSpacing: 8.1
+    BlockType: 1
+    BlockColor: 2
+  - BlockAmount: 2
+    blockSpacing: 8.1
     BlockType: 1
     BlockColor: 0
+  - BlockAmount: 7
+    blockSpacing: 0.1
+    BlockType: 1
+    BlockColor: 1
+  - BlockAmount: 2
+    blockSpacing: 8.1
+    BlockType: 1
+    BlockColor: 0
+  - BlockAmount: 2
+    blockSpacing: 8.1
+    BlockType: 1
+    BlockColor: 2
+  - BlockAmount: 7
+    blockSpacing: 0.1
+    BlockType: 1
+    BlockColor: 3
